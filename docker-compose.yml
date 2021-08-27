@@ -1,0 +1,21 @@
+version: "3"
+services:
+  wiki:
+    image: requarks/wiki:2
+    container_name: $CONTAINER
+    ports:
+      - "$PORT:3000"
+    environment:
+      DB_TYPE: postgres
+      DB_HOST: $DB_HOST
+      DB_PORT: 5432
+      DB_USER: $DB_USER
+      DB_PASS: $DB_PASS
+      DB_NAME: $DB_NAME
+    restart: unless-stopped
+    networks:
+      - wiki
+
+networks:
+  wiki:
+
