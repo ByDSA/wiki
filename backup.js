@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const { AppBackup, getLastPartOf, logSection } = require("datils");
 
 const PROJECT_FOLDER = __dirname;
