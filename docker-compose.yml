@@ -2,7 +2,7 @@ version: "3"
 services:
   wiki:
     image: requarks/wiki:2
-    container_name: $CONTAINER
+    container_name: wiki
     ports:
       - "$PORT:3000"
     environment:
