@@ -3,19 +3,35 @@ services:
   wiki:
     image: requarks/wiki:2.5.294
     container_name: $CONTAINER
+    depends_on:
+      - db
     ports:
       - "$PORT:3000"
     environment:
       DB_TYPE: postgres
       DB_HOST: $DB_HOST
-      DB_PORT: 5432
+      DB_PORT: $DB_PORT
       DB_USER: $DB_USER
       DB_PASS: $DB_PASS
       DB_NAME: $DB_NAME
     restart: unless-stopped
-    networks:
-      - wiki
 
-networks:
-  wiki:
+  db:
+    image: postgres:14-alpine
+    container_name: $CONTAINER-db
+    restart: always
+    ports:
+      # Para acceso desde 'wiki' es 'wiki-db:5432'
+      # Usar 'ports' para acceder desde fuera de este docker-
+      - "$DB_PORT:5432"
+    environment:
+      POSTGRES_PASSWORD: $DB_PASS
+      POSTGRES_USER: $DB_USER
+      POSTGRES_DB: $DB_NAME
+    volumes:
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:
+    driver: local
 
